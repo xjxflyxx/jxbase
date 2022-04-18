@@ -1,0 +1,698 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: package jxbase</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>jxbase</strong></big></big> (version 3.1)</font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:c%3A%5Canaconda3%5Clib%5Csite-packages%5Cjxbase-3.1-py3.8.egg%5Cjxbase%5C__init__.py">c:\anaconda3\lib\site-packages\jxbase-3.1-py3.8.egg\jxbase\__init__.py</a></font></td></tr></table>
+    <p><tt>作者：xjxfly<br>
+邮箱：xjxfly@qq.com<br>
+QQ交流群：1001030977<br>
+&nbsp;<br>
+说明：<br>
+这是基础包，是一些通用功能（纯函数）的集合。<br>
+包内提供了一些接口，具体有哪些接口可用及怎样调用，请用&nbsp;help(包名)&nbsp;&nbsp;查看，<br>
+如果导入包时有&nbsp;as&nbsp;过的话，则用&nbsp;help(as过后的别名)&nbsp;查看。</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Package Contents</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="jxbase.common_config.html">common_config</a><br>
+</td><td width="25%" valign=top><a href="jxbase.jxbase_lib.html">jxbase_lib</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-acquire_redis_lock"><strong>acquire_redis_lock</strong></a>(lock_name, redis_conn, expire_time=10, timeout=10)</dt><dd><tt>功能说明：尝试获取&nbsp;redis&nbsp;中指定&nbsp;lock_name&nbsp;的锁，&nbsp;以便对资源进行操作。主要用在分布式环境，因为各分布式电脑可能对&nbsp;redis&nbsp;的数据同时修改，所以修改前需要先获得锁，防止混乱。<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lock_name&nbsp;:&nbsp;TYPE：str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：这是锁名称，实际上就是&nbsp;redis&nbsp;的一个&nbsp;key<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;expire_time&nbsp;:&nbsp;TYPE:&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：如果获到了锁，expire_time&nbsp;是给锁加的超时时间，默认&nbsp;10&nbsp;秒，即本次加锁无论是否主动释放，锁都将在10秒后自动释放.&nbsp;The&nbsp;default&nbsp;is&nbsp;10.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;timeout:&nbsp;type:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：这是本接口最多尝试的时间，单位秒，如果超过&nbsp;timeout&nbsp;还没获取到锁的话，则返回&nbsp;False<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：如果获取到锁，则返回给锁加的&nbsp;uuid&nbsp;值，否则返回&nbsp;False</tt></dd></dl>
+ <dl><dt><a name="-append_arr_to_df"><strong>append_arr_to_df</strong></a>(df, arr)</dt><dd><tt>功能说明：不直接修改传入的&nbsp;df!!<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;把数组形式的&nbsp;arr&nbsp;（必须是一维）追加到&nbsp;DataFrame&nbsp;形式的&nbsp;df&nbsp;行末尾，并将&nbsp;df&nbsp;返回到主调函数，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;要求&nbsp;arr&nbsp;的元素个数及含意与&nbsp;df&nbsp;的列数及含义相同；注意：添加行后，将重建索引！<br>
+参数：df:&nbsp;pandas&nbsp;格式；&nbsp;arr:&nbsp;一维&nbsp;list，要求元素个数及含义与&nbsp;df&nbsp;的列数及含义相同<br>
+返回值：在原&nbsp;df&nbsp;最后一行添加&nbsp;arr&nbsp;后生成新的&nbsp;result_df</tt></dd></dl>
+ <dl><dt><a name="-change_path_style"><strong>change_path_style</strong></a>(xpath=None, style='UNIX', end_slash=None)</dt><dd><tt>功能说明：转换路径风格<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpath:&nbsp;为待转换的路径；&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style：&nbsp;为目标风格，接受值：'dos','windows','linux','unix',&nbsp;以及他们的大写，含意与小写相同。默认&nbsp;unix（linux）风格<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endwith:&nbsp;表示转换路径后是否确保路径末尾必须有指定符号，默认&nbsp;None，表示原汁原味，不在末尾添加任何符号，可接受以下符号<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None:&nbsp;表示不添加任何符号，保持原样<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True:&nbsp;表示确保路径末尾以'/'或'\'结尾<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False:&nbsp;表示确保路径末尾没有'/'或'\'结尾<br>
+返回值：转换风格后的路径</tt></dd></dl>
+ <dl><dt><a name="-concat"><strong>concat</strong></a>(arr)</dt><dd><tt>功能说明：本函数模仿&nbsp;pandas.<a href="#-concat">concat</a>()，但可以接受&nbsp;None&nbsp;元素以及任何元素，但只有&nbsp;df&nbsp;&nbsp;元素才会被拼接，其他元素都将被忽略。<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr:&nbsp;type:&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：该参数必须是一个&nbsp;list，其元素为&nbsp;df&nbsp;（所有&nbsp;df&nbsp;的列名和顺序都必须相同）或&nbsp;None或其他任何数据类型，但只有&nbsp;df&nbsp;会被采用，其他元素都会被忽略。&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：拼接好后的&nbsp;df.&nbsp;若传入的&nbsp;arr&nbsp;中没有&nbsp;df，则返回&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-convert_df_type"><strong>convert_df_type</strong></a>(df, xtype=&lt;class 'float'&gt;, column_arr=None)</dt><dd><tt>功能说明：不直接修改传入的&nbsp;df!!<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;对传入的&nbsp;df&nbsp;，根据传入的字段&nbsp;column_arr&nbsp;（如果有的话，要是没有的话，则对&nbsp;df&nbsp;中所有字段转换），<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;从&nbsp;df&nbsp;中找到对应的列，将其数据类型转换为&nbsp;xtype&nbsp;指定的类型；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;无法转换的数据值将用0填充，请调用者自己注意填&nbsp;0&nbsp;后返回去是否符合要求！&nbsp;&nbsp;若不符合要求就不要调用本函数。<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df,&nbsp;待转换字段类型的&nbsp;df;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xtype,&nbsp;目标数据类型；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;column_arr，需要转换哪些列<br>
+返回值：转换数据类型后的&nbsp;df</tt></dd></dl>
+ <dl><dt><a name="-decrypt"><strong>decrypt</strong></a>(crypt_msg, key=None, xtype='ARC4', **kwargs)</dt><dd><tt>功能说明：本接口用来对传入的数据&nbsp;crypt_msg&nbsp;调用&nbsp;xtype&nbsp;指向的解密类型用相应的密钥&nbsp;key&nbsp;进行解密<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;crypt_msg:&nbsp;字节流型，必填<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：该参数是待解密的字节流型串（原先已加密）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key:&nbsp;str型或bytes型，可选，默认值&nbsp;None,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：若参数&nbsp;xtype='rsa'，则&nbsp;key必须指定。大部分解密类型下，key&nbsp;都必须指定<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xtype:&nbsp;str型，可选，默认值:&nbsp;'ARC4'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：该参数指出用哪种解密方式进行解密，解密方式取决于当初的加密方式，可取以下值（不区分大小写）：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'rsa':&nbsp;表示用&nbsp;rsa&nbsp;的私钥进行解密<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'chacha20':&nbsp;表示用&nbsp;chacha20&nbsp;进行解密，需要传入当初用&nbsp;chacha20&nbsp;加密后返回的&nbsp;key&nbsp;和&nbsp;nonce&nbsp;分别给形参&nbsp;key&nbsp;和&nbsp;nonce<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'aes':&nbsp;表示用&nbsp;aes&nbsp;进行解密，需要传入当初用&nbsp;aes&nbsp;加密后返回的&nbsp;key&nbsp;和&nbsp;nonce&nbsp;分别给形参&nbsp;key&nbsp;和&nbsp;nonce<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'arc4':&nbsp;表示用&nbsp;arc4&nbsp;进行解密，需要传入当初用&nbsp;arc4&nbsp;加密后返回的&nbsp;key&nbsp;给形参&nbsp;key<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kwargs:&nbsp;用来传递某些解密方法需要用到却又未在本接口命名的形参，如传递&nbsp;nonce&nbsp;给形参&nbsp;nonce&nbsp;等<br>
+返回值：msg,&nbsp;str型，即解密后的数据</tt></dd></dl>
+ <dl><dt><a name="-delete_api_list"><strong>delete_api_list</strong></a>(filename)</dt><dd><tt>功能说明：对一个&nbsp;.py&nbsp;文件，查找其中是否有&nbsp;__all__&nbsp;，有的话将其定义的&nbsp;list&nbsp;删除，把删除后剩余的内容写到原文件。<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filename&nbsp;:&nbsp;TYPE：str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;只接受&nbsp;.py&nbsp;文件<br>
+Returns<br>
+-------<br>
+返回值：无。直接把删除&nbsp;__all__&nbsp;定义后的&nbsp;.py&nbsp;文件，直接保存到原文件</tt></dd></dl>
+ <dl><dt><a name="-df_to_list"><strong>df_to_list</strong></a>(df, head=False)</dt><dd><tt>功能说明：将&nbsp;df&nbsp;转成二维数组<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df:&nbsp;pandas的&nbsp;DataFrame数据<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;head:&nbsp;type:&nbsp;bool,&nbsp;表示要不要包含列头，可取以下值：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True：保留列头<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;不保留列头（默认）<br>
+返回值：二维数组</tt></dd></dl>
+ <dl><dt><a name="-df_to_table"><strong>df_to_table</strong></a>(df, head=True, align='center', color_flag=False, fore_color1='black', fore_color2='black', bgcolor1='#F5F5DC', bgcolor2='#A7EEFB')</dt><dd><tt>功能说明：将&nbsp;df&nbsp;转成&nbsp;html&nbsp;的&nbsp;table&nbsp;形式，并以字符串形式返回，主要是为了发电子邮件用<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df:待转换的&nbsp;pandas&nbsp;DataFrame数据；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;head:&nbsp;type:&nbsp;bool,&nbsp;表示要不要保留df&nbsp;的列名，可取以下值：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;：表示保留列头（默认）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False：表示不要保留<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;align:对齐方式，可取值为：&nbsp;'left','center','right'，默认&nbsp;'center'；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color_flag:要不要用前景色背景色装饰表格，取值True或False；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在&nbsp;color_flag&nbsp;=&nbsp;True&nbsp;的前提下，后面这几个参数才有效，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fore_color1:&nbsp;前景色1（即定体颜色）；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fore_color2:前景色2（字体颜色）；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bgcolor1:&nbsp;表格行背景色1；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bgcolor2:表格行背景色2<br>
+返回值：字符串形式的&nbsp;html&nbsp;table</tt></dd></dl>
+ <dl><dt><a name="-df_to_tuple"><strong>df_to_tuple</strong></a>(df, head=False)</dt><dd><tt>功能说明：将&nbsp;df&nbsp;转成二维元组（不包括列名），即整个是元组，里面每一行也是元组<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df:&nbsp;pandas的&nbsp;DataFrame数据<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;head:&nbsp;type:&nbsp;bool,&nbsp;表示要不要包含列头，可取以下值：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True：保留列头<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;不保留列头（默认）<br>
+返回值：二维元组</tt></dd></dl>
+ <dl><dt><a name="-df_to_webpage"><strong>df_to_webpage</strong></a>(df, head=True, align='center', color_flag=False, fore_color1='black', fore_color2='black', bgcolor1='#F5F5DC', bgcolor2='#A7EEFB')</dt><dd><tt>功能说明：将&nbsp;df&nbsp;转成&nbsp;html&nbsp;webpage&nbsp;形式，并以字符串形式返回，主要是为了发电子邮件用<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df:待转换的&nbsp;pandas&nbsp;DataFrame数据；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;head:&nbsp;type:&nbsp;bool,&nbsp;表示要不要保留df&nbsp;的列名，可取以下值：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;：表示保留列头（默认）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False：表示不要保留<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;align:对齐方式，可取值为：&nbsp;'left','center','right'，默认&nbsp;'center'；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color_flag:要不要用前景色背景色装饰表格，取值True或False；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在&nbsp;color_flag&nbsp;=&nbsp;True&nbsp;的前提下，后面这几个参数才有效，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fore_color1:&nbsp;前景色1（即定体颜色）；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fore_color2:前景色2（字体颜色）；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bgcolor1:&nbsp;表格行背景色1；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bgcolor2:表格行背景色2<br>
+返回值：字符串形式的&nbsp;html&nbsp;webpage</tt></dd></dl>
+ <dl><dt><a name="-encrypt"><strong>encrypt</strong></a>(msg, key=None, key_len=32, xtype='ARC4', **kwargs)</dt><dd><tt>功能说明：本接口用来对传入的数据&nbsp;msg&nbsp;调用&nbsp;xtype的加密类型用密钥&nbsp;key&nbsp;进行加密<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msg:&nbsp;str型或字节流型，必填<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：该参数为待加密的字符串，（若是其他类型，可先转成字符串）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key:&nbsp;str型或bytes型，可选，默认值&nbsp;None,&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：若参数&nbsp;xtype='rsa'，则&nbsp;key必须指定。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;key_len:&nbsp;int型，可选，默认值32<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：若参数&nbsp;key&nbsp;为&nbsp;None，则&nbsp;key_len&nbsp;起作用，将由接口自动产一个长度为&nbsp;key_len&nbsp;的&nbsp;key<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xtype:&nbsp;str型，可选，默认值:&nbsp;'ARC4'<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：该参数指出用哪种加密方式进行加密，可取以下值（不区分大小写）：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'rsa':&nbsp;表示用&nbsp;rsa&nbsp;非对称加密（有限长加密）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'chacha20':&nbsp;表示用&nbsp;chacha20&nbsp;对称加密（流加密）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'aes':&nbsp;表示用&nbsp;aes&nbsp;对称加密（块加密）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'arc4':&nbsp;表示用&nbsp;arc4&nbsp;对称加密（流加密），这个加密方法比较简单，只要一个&nbsp;key&nbsp;即可加密和解密，所以设成了默认加密方法。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kwargs:&nbsp;预留扩展参数用<br>
+返回值：result_arr:&nbsp;是一个&nbsp;list,&nbsp;第一个元素是加密后的信息，字节流类型（不转成&nbsp;str&nbsp;型返回是因为有些加密后的字节流在转成&nbsp;str&nbsp;过程中要出错，所以保留字节流型返回<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;其他元素（若有的话）个数及含义取决于加密类型&nbsp;xtype<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.&nbsp;若加密类型&nbsp;xtype&nbsp;=&nbsp;'rsa'，则返回值&nbsp;result_arr中只有一个元素，即加密后的信息（字节流形式）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;若加密类型&nbsp;xtype&nbsp;=&nbsp;'chacha20',&nbsp;则返回值&nbsp;result_arr&nbsp;中有3个元素，第一个元素是加密后的信息（字节流形式），第二个元素是用来解密的&nbsp;key,&nbsp;第三个元素是解密要用到的参数&nbsp;nonce<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;若加密类型&nbsp;xtype&nbsp;=&nbsp;'aes',&nbsp;则返回值&nbsp;result_arr&nbsp;中有3个元素，第一个元素是加密后的信息（字节流形式），第二个元素是用来解密的&nbsp;key,&nbsp;第三个元素是解密要用到的参数&nbsp;nonce<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.&nbsp;若加密类型&nbsp;xtype&nbsp;=&nbsp;'arc4',&nbsp;则返回值&nbsp;result_arr&nbsp;中有2&nbsp;个元素，第一个元素是加密后的信息（字节流形式），第2个元素是用来解密的&nbsp;key</tt></dd></dl>
+ <dl><dt><a name="-file_log"><strong>file_log</strong></a>(msg, filename=None)</dt><dd><tt>功能说明：本接口的作用是把&nbsp;msg&nbsp;信息记录到&nbsp;filename&nbsp;文件中去（文件位置会由本接口自动指定，一般会指定到&nbsp;report_dir）<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+msg&nbsp;:&nbsp;TYPE:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：这是待写到文件的信息<br>
+filename&nbsp;:&nbsp;TYPE：str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：这是文件名。&nbsp;The&nbsp;default&nbsp;is&nbsp;None.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：写成功返回&nbsp;True,&nbsp;否则返回&nbsp;False.</tt></dd></dl>
+ <dl><dt><a name="-find"><strong>find</strong></a>(xpath, s, case_sensitive=False, out_file=None)</dt><dd><tt>功能说明：本接口在指定的&nbsp;xpath&nbsp;目录（及子目录）下对所有文本文件中查找指定字符串&nbsp;s，把所有包含&nbsp;s&nbsp;的文件显示出来；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若指定了&nbsp;out_file&nbsp;的话，则将查找结果同时保存到&nbsp;out_file&nbsp;中。<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpath:&nbsp;type:&nbsp;str,&nbsp;待查找的目录<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s&nbsp;:&nbsp;TYPE：str,&nbsp;待查找字符串<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case_sensitive:&nbsp;type:bool,&nbsp;表示是否大小写敏感，可取值&nbsp;True&nbsp;或&nbsp;False&nbsp;，分别表示敏感或不敏感（默认&nbsp;False)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out_file&nbsp;:&nbsp;TYPE:str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果有指定的话，则将查找结果输出到文件.&nbsp;<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：查找结果所在的文件形成的&nbsp;list</tt></dd></dl>
+ <dl><dt><a name="-ftp_close"><strong>ftp_close</strong></a>(ftp)</dt><dd><tt>功能说明：关闭FTP&nbsp;连接<br>
+参数：ftp:&nbsp;已经连接的&nbsp;ftp&nbsp;对象<br>
+返回值：无</tt></dd></dl>
+ <dl><dt><a name="-ftp_down"><strong>ftp_down</strong></a>(ftp, filename)</dt><dd><tt>功能说明：该函数用来从&nbsp;FTP&nbsp;服务器下载文件，<br>
+参数：ftp:&nbsp;指向&nbsp;FTP&nbsp;服务器的连接符；filename:&nbsp;待下载的文件，可以是windows&nbsp;格式包含全路径的文件<br>
+返回值：无</tt></dd></dl>
+ <dl><dt><a name="-ftp_open"><strong>ftp_open</strong></a>(host=None, port=None, username=None, password=None)</dt><dd><tt>功能说明：初始化&nbsp;FTP&nbsp;连接，返回指向&nbsp;ftp&nbsp;服务器的连接符。首先会尝试从传入的参数中读取信息，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若没传入，则次选从用户的配置文件&nbsp;user_config.ini&nbsp;中读取FTP&nbsp;服务器配置信息，若没有，则第3选择从&nbsp;py&nbsp;配置文件中读取，若还是没有，则返回&nbsp;None<br>
+参数：host:&nbsp;FTP服务器；port:&nbsp;服务器端口;&nbsp;username:&nbsp;登录&nbsp;ftp&nbsp;&nbsp;的用户名;&nbsp;password:&nbsp;登录&nbsp;ftp&nbsp;的密码<br>
+返回值：成功登录后的&nbsp;ftp&nbsp;操作对象（若登录失败则返回&nbsp;None)</tt></dd></dl>
+ <dl><dt><a name="-ftp_up"><strong>ftp_up</strong></a>(ftp, filename)</dt><dd><tt>功能说明：该函数用来上传文件到FTP&nbsp;服务器，<br>
+参数：ftp:&nbsp;指向&nbsp;FTP&nbsp;服务器的连接符；filename:&nbsp;待上传的文件，可以是windows&nbsp;格式包含全路径的文件<br>
+返回值：无</tt></dd></dl>
+ <dl><dt><a name="-get_api_list"><strong>get_api_list</strong></a>()</dt><dd><tt>功能说明：本函数仅仅用于返回可用接口列表，不在列表中列出的函数或接口等请不要调用，他们一般在内部实现使用，未来可能会改名或调整！！<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：可用接口,&nbsp;list形式</tt></dd></dl>
+ <dl><dt><a name="-get_arr_add"><strong>get_arr_add</strong></a>(arr1, arr2)</dt><dd><tt>功能说明：计算两个数组（相同维度）对应元素（必须数值型）的加法<br>
+参数：arr1,&nbsp;arr2：参加求和的两个&nbsp;list<br>
+返回值：arr1&nbsp;和&nbsp;arr2&nbsp;对应元素的求和结果（list型）</tt></dd></dl>
+ <dl><dt><a name="-get_arr_divide"><strong>get_arr_divide</strong></a>(arr1, arr2)</dt><dd><tt>功能说明：计算两个数组（相同维度）对应元素（必须数值型）的除法(arr1&nbsp;/&nbsp;arr2)<br>
+参数：arr1,&nbsp;arr2：参加求商的两个&nbsp;list<br>
+返回值：arr1&nbsp;和&nbsp;arr2&nbsp;对应元素的求商结果（list型）</tt></dd></dl>
+ <dl><dt><a name="-get_arr_multiply"><strong>get_arr_multiply</strong></a>(arr1, arr2)</dt><dd><tt>功能说明：计算两个数组（相同维度）对应元素（必须数值型）的乘积<br>
+参数：arr1,&nbsp;arr2：参加求积的两个&nbsp;list<br>
+返回值：arr1&nbsp;和&nbsp;arr2&nbsp;对应元素的求积结果（list型）</tt></dd></dl>
+ <dl><dt><a name="-get_arr_ratio"><strong>get_arr_ratio</strong></a>(arr1, arr2)</dt><dd><tt>功能说明：计算两个等长数值数组&nbsp;arr2&nbsp;各元素相对于&nbsp;arr1&nbsp;各对应元素的增长幅度，即&nbsp;(arr2&nbsp;-&nbsp;arr1&nbsp;)&nbsp;/&nbsp;arr1&nbsp;这个意思，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具体要用到&nbsp;numpy&nbsp;，python&nbsp;的&nbsp;list&nbsp;无法直接这样计算，必须先转成&nbsp;numpy&nbsp;的&nbsp;array&nbsp;才行。<br>
+参数：arr1,&nbsp;arr2:&nbsp;两个数值型&nbsp;list</tt></dd></dl>
+ <dl><dt><a name="-get_arr_sub"><strong>get_arr_sub</strong></a>(arr1, arr2)</dt><dd><tt>功能说明：计算两个数组（相同维度）对应元素（必须数值型）的减法(arr1&nbsp;-&nbsp;arr2)<br>
+参数：arr1,&nbsp;arr2：参加求差的两个&nbsp;list<br>
+返回值：arr1&nbsp;和&nbsp;arr2&nbsp;对应元素的求差结果（list型）</tt></dd></dl>
+ <dl><dt><a name="-get_builtin_modules"><strong>get_builtin_modules</strong></a>()</dt><dd><tt>功能说明：查找所有已安装的随&nbsp;python&nbsp;内置的模块或包，以&nbsp;list&nbsp;形式将他们返回。<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：所有已安装的随&nbsp;python&nbsp;内置的模块或包组成的&nbsp;list</tt></dd></dl>
+ <dl><dt><a name="-get_comment_start_symbol"><strong>get_comment_start_symbol</strong></a>(line, comment_symbol_arr)</dt><dd><tt>功能说明：从给定的程序源码行&nbsp;line&nbsp;的注释结束符（若有的话）之后的剩余内容中寻找一个有效的注释起始符，注释起始符和结束符配对情况要传给&nbsp;comment_symbol_arr&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;按照&nbsp;python&nbsp;语法要求，一行代码中去掉注释结束符后剩余部分的内容，如果有的话，必须以注释起始符开始，否则在注释结束符后的同一行内写有效代码是语法错误。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;因此&nbsp;本接口&nbsp;对传入的&nbsp;注释结束符之后的同一行剩余代码，都会检测是不是以注释符起始符开头，若不是，直接返回&nbsp;None，否则才开始检测注释嵌套。<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;line&nbsp;:&nbsp;TYPE：str，程序源码行（一行）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;comment_symbol_arr&nbsp;:&nbsp;TYPE，二维&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;这是一个二维&nbsp;list，每一个元素是一维&nbsp;list,这一维&nbsp;list&nbsp;只包含两个元素，分别是起始注释符和结束注释符<br>
+Returns<br>
+-------<br>
+返回值，找到的有效起始符，若没找到，则返回&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-get_comment_symbols"><strong>get_comment_symbols</strong></a>()</dt><dd><tt>功能说明：定义一个字典，建立文件类型与其注释符对应关系<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：是一个&nbsp;dict,每个元素的&nbsp;key&nbsp;代表源码文件类型（如：.py），value&nbsp;代表该源码文件的注释符(是一个二维&nbsp;list，其中每个元素是一维&nbsp;list，该一维&nbsp;list&nbsp;包含两个元素，表示开始注释符和结束注释符)</tt></dd></dl>
+ <dl><dt><a name="-get_computer_name"><strong>get_computer_name</strong></a>()</dt><dd><tt>功能说明：该函数用于获取电脑名称<br>
+参数：无<br>
+返回值：电脑名称（字符串类型）</tt></dd></dl>
+ <dl><dt><a name="-get_count_24"><strong>get_count_24</strong></a>(num_arr, result=24, operator_arr=None, times_arr=[0])</dt><dd><tt>功能说明:&nbsp;根据传入的操作数&nbsp;num_arr&nbsp;(list形式)&nbsp;和操作符&nbsp;operator_arr(list&nbsp;形式),&nbsp;每个数用且只用一次,&nbsp;返回计算结果和&nbsp;result&nbsp;一致的表达式<br>
+参数:&nbsp;num_arr:&nbsp;操作数&nbsp;list;&nbsp;&nbsp;operator_arr:&nbsp;操作符&nbsp;list;&nbsp;result:&nbsp;要求计算达到的结果<br>
+返回值:&nbsp;解的步骤（list&nbsp;类型），list&nbsp;中的每个元素（字符串）代表其中一步解</tt></dd></dl>
+ <dl><dt><a name="-get_current_function_name"><strong>get_current_function_name</strong></a>()</dt><dd><tt>功能说明：当该函数被调用时，将返回上级函数（即主调函数）的函数名，所以一般用它放在函数内部来获取函数名&nbsp;<br>
+参数：无<br>
+返回值：主调函数名（字符串形式）</tt></dd></dl>
+ <dl><dt><a name="-get_current_time"><strong>get_current_time</strong></a>(xtime=None, time_format='%Y-%m-%d - %H:%M:%S')</dt><dd><tt>功能说明：根据传入的时间戳，取出时间返回<br>
+参数：xtime:&nbsp;是时间戳，如time.time()&nbsp;返回的结果<br>
+返回值：返回该时间戳指向的时间部分，以HH：MM：SS字符串格式返回。</tt></dd></dl>
+ <dl><dt><a name="-get_date"><strong>get_date</strong></a>(xtime=None)</dt><dd><tt>功能说明：根据传入的时间戳，取出日期返回<br>
+参数：xtime:&nbsp;是时间戳，如time.time()&nbsp;返回的结果<br>
+返回值：返回该时间戳指向的日期部分，以YYYY-MM-DD字符串格式返回。</tt></dd></dl>
+ <dl><dt><a name="-get_date_time"><strong>get_date_time</strong></a>(xtime=None, time_format='%Y-%m-%d - %H:%M:%S')</dt><dd><tt>功能说明：根据传入的时间戳，取出日期时间返回<br>
+参数：xtime:&nbsp;是时间戳，如time.time()&nbsp;返回的结果<br>
+返回值：返回该时间戳指向的日期时间部分，以YYYY-MM-DD&nbsp;-&nbsp;HH:MM:SS&nbsp;字符串格式返回。</tt></dd></dl>
+ <dl><dt><a name="-get_day"><strong>get_day</strong></a>(xdate=None)</dt><dd><tt>功能说明：对传入的日期取日份以数值型返回，<br>
+参数：xdate，表示传入日期，取值可以是YYYY-mm-dd格式，或用&nbsp;python&nbsp;构造的日期型，<br>
+返回值：整型日</tt></dd></dl>
+ <dl><dt><a name="-get_days_step"><strong>get_days_step</strong></a>(n=1)</dt><dd><tt>功能说明：根据传入的参数n，返回&nbsp;n天<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+n&nbsp;:&nbsp;TYPE&nbsp;int,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;表示天数.&nbsp;The&nbsp;default&nbsp;is&nbsp;1.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：python&nbsp;datetime.timedelta()&nbsp;日期类型的天数</tt></dd></dl>
+ <dl><dt><a name="-get_empty_df"><strong>get_empty_df</strong></a>(df)</dt><dd><tt>功能说明：不直接修改传入的&nbsp;df!!&nbsp;根据传入的df,&nbsp;返回一个由该&nbsp;df&nbsp;的列头组成且保持顺序的空的&nbsp;df<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+df&nbsp;:&nbsp;TYPE:&nbsp;pandas&nbsp;dataframe<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+空的&nbsp;df</tt></dd></dl>
+ <dl><dt><a name="-get_file_info"><strong>get_file_info</strong></a>(filename)</dt><dd><tt>功能说明：统计一个&nbsp;程序源码文件的有效代码行数，注释行数，空白行数等<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filename,&nbsp;表示一个程序源码文件（可能需全路径）<br>
+Returns<br>
+-------<br>
+返回值：df，该df包含有效代码行数，注释行数，空白行数等。</tt></dd></dl>
+ <dl><dt><a name="-get_file_lines"><strong>get_file_lines</strong></a>(filename, include_blank_line=False)</dt><dd><tt>功能说明：统计一个&nbsp;文件的行数<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filename,&nbsp;表示一个文本文件（可能需全路径）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include_blank_line:&nbsp;type:&nbsp;bool，表示是否统计空行，默认&nbsp;False，表示不统计空行<br>
+Returns<br>
+-------<br>
+返回值：该文件的行数</tt></dd></dl>
+ <dl><dt><a name="-get_hash"><strong>get_hash</strong></a>(s, hash_mode='sha512')</dt><dd><tt>功能说明：根据传入的哈希算法对传入的字符串&nbsp;s&nbsp;进行哈希计算，并将结果返回<br>
+参数：s:&nbsp;待计算字符串，hash_mode:&nbsp;哪种哈希算法<br>
+返回值：哈希计算后的结果（字符串类型）</tt></dd></dl>
+ <dl><dt><a name="-get_hh"><strong>get_hh</strong></a>(xtime=None)</dt><dd><tt>功能说明：根据传入的时间&nbsp;，返回小时部分（整型）<br>
+参数：xtime，可以是格式为&nbsp;hh:mm:ss&nbsp;的时间字符串，也可以是时间戳<br>
+返回值：整型&nbsp;hh</tt></dd></dl>
+ <dl><dt><a name="-get_home_dir"><strong>get_home_dir</strong></a>()</dt><dd><tt>功能说明：本接口用于获取用户主目录路径。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在&nbsp;linux&nbsp;上执行，获取到的是&nbsp;home&nbsp;所在路径；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在&nbsp;windows&nbsp;上执行，获取到的是当前用户的用户目录，类似这样：C:\Users\Administrator<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：用户目录所在路径</tt></dd></dl>
+ <dl><dt><a name="-get_installed_modules"><strong>get_installed_modules</strong></a>()</dt><dd><tt>功能说明：返回所有已安装的模块或包组成的&nbsp;list（包括内置模块或包第3方安装的模块或包）<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：返回所有已安装的模块或包组成的&nbsp;list（包括内置模块或包第3方安装的模块或包）</tt></dd></dl>
+ <dl><dt><a name="-get_kelly_percent"><strong>get_kelly_percent</strong></a>(p, rl, rw)</dt><dd><tt>功能说明：获取用凯利公式计算后的下注百分比（应用凯利公式的前提是数学期望必须大于0，否则用不用凯利公式的结局都是亏！！）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;凯利公式（Kelly&nbsp;Formula）:&nbsp;f&nbsp;=&nbsp;p/rl&nbsp;-&nbsp;q/rw，&nbsp;&nbsp;(即下注百分比&nbsp;=&nbsp;赢的概率/净损失率&nbsp;-&nbsp;输的概率/净收益率)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p:表示赢的概率（必须是达到&nbsp;rw&nbsp;的概率）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;q:&nbsp;表示输的概率（p&nbsp;+&nbsp;q&nbsp;=&nbsp;1)（必须是达到&nbsp;rl&nbsp;的概率）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rl:&nbsp;损失率，即输掉时应当支付的百分比，譬如今天炒股亏损&nbsp;5%，&nbsp;那这个&nbsp;rl&nbsp;就取&nbsp;5%，而上述的&nbsp;q，就是指&nbsp;rl&nbsp;发生的概率<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rw:&nbsp;收益率，即赢到的百分比，譬如今天炒股盈利&nbsp;7%，则&nbsp;rw&nbsp;就取&nbsp;7%，而上述的&nbsp;p，就是指&nbsp;rw&nbsp;发生的概率<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注意：按照凯利公式，p&nbsp;+&nbsp;q&nbsp;必须为&nbsp;1，&nbsp;rl&nbsp;和&nbsp;rw&nbsp;也必须是对立事件，不是这个发生就是那个发生。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;赌博不是输就是赢，其模型比较适合凯利公式；而炒股的股价是连续变化，未来股价变化有非常非常多的取值，每一个价格都有一个对应的概率，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;所以，股票模型是个概率分布，不是非此即彼的对立事件，同时，rl&nbsp;和&nbsp;rw&nbsp;也成了概率分布，如此一来，凯利公式无法直接用在股票模型上，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;只有把股票的连续的价格变化通过抽象建模转换成二值对立事件，然后才可以套用凯利公式。<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;p&nbsp;:&nbsp;TYPE:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;表示赢的概率（必须是达到&nbsp;rw&nbsp;的概率）&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rl&nbsp;:&nbsp;TYPE:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;损失率，即输掉时应当支付的百分比，譬如今天炒股亏损&nbsp;5%，&nbsp;那这个&nbsp;rl&nbsp;就取&nbsp;5%，而上述的&nbsp;q，就是指&nbsp;rl&nbsp;发生的概率<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rw&nbsp;:&nbsp;TYPE:&nbsp;float<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;收益率，即赢到的百分比，譬如今天炒股盈利&nbsp;7%，则&nbsp;rw&nbsp;就取&nbsp;7%，而上述的&nbsp;p，就是指&nbsp;rw&nbsp;发生的概率<br>
+Returns<br>
+-------<br>
+返回值：是一个百分比，表示按照可以承受损失的总本金的这个百分比去下注，会使收益最大化。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（注意：只有当返回值大于&nbsp;0&nbsp;才有意义，如果返回值小于或等于&nbsp;0，则不赌就是赢！！！！）</tt></dd></dl>
+ <dl><dt><a name="-get_lastfile"><strong>get_lastfile</strong></a>(xpath)</dt><dd><tt>功能说明：从&nbsp;xpath&nbsp;目录中找出修改时间为最新的一个文件，并返回给主调函数<br>
+参数：xpath:&nbsp;表示一条目录路径<br>
+返回值：xpath&nbsp;目录下修改时间最新的文件。</tt></dd></dl>
+ <dl><dt><a name="-get_line_nums"><strong>get_line_nums</strong></a>(filename, lines_arr=None)</dt><dd><tt>功能说明：这个函数很重要，本包内的一些其他接口依赖他。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;扫描一个&nbsp;程序源码文件，生成代码行行号&nbsp;list,&nbsp;注释行号&nbsp;list,&nbsp;空白行号&nbsp;list，以及函数定义行号&nbsp;list,&nbsp;类定义行号&nbsp;list（目前函数定义行及类定义行统计只针对&nbsp;.py&nbsp;源码）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;返回一个&nbsp;dict,&nbsp;有&nbsp;5&nbsp;个元素指向&nbsp;5&nbsp;个list,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;个元素分别是&nbsp;'code'，表示代码行,'comment'，表示注释行，'blank'，表示空白行<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以及&nbsp;'func'&nbsp;表示函数定义所在行，'xclass'&nbsp;表示类定义所在行。<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filename,&nbsp;表示一个程序源码文件（可能需全路径）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lines_arr:&nbsp;表示一个源码文件已用&nbsp;linecache.getlines()&nbsp;读取出来的结果传进来，如果这个值为&nbsp;None，则采用&nbsp;filename，否则先采用&nbsp;lines_arr，避免重复到&nbsp;filename&nbsp;中读大量数据。<br>
+Returns<br>
+-------<br>
+返回值：&nbsp;&nbsp;&nbsp;&nbsp;返回一个&nbsp;dict,&nbsp;有&nbsp;5&nbsp;个元素指向&nbsp;5&nbsp;个list,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;个元素分别是&nbsp;'code'，表示代码行,'comment'，表示注释行，'blank'，表示空白行<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;以及&nbsp;'func'&nbsp;表示函数定义所在行，'xclass'&nbsp;表示类定义所在行。</tt></dd></dl>
+ <dl><dt><a name="-get_mac_address"><strong>get_mac_address</strong></a>()</dt><dd><tt>功能说明：获取本机&nbsp;MAC&nbsp;地址</tt></dd></dl>
+ <dl><dt><a name="-get_magic_square"><strong>get_magic_square</strong></a>(n=3, arr=None)</dt><dd><tt>功能说明：该函数用于产生一个幻方，使得每一行、每一列以及对角线，他们各自的和都相等。<br>
+参数：n:&nbsp;方阵的边长，必须是大于等于&nbsp;3&nbsp;的正整数；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr（可选）:&nbsp;是一个&nbsp;list，表示需要对&nbsp;arr&nbsp;中的数求幻方，arr&nbsp;的长度必须是一个奇数的平方数。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr&nbsp;是可选的，如果输入&nbsp;arr&nbsp;，则不考虑&nbsp;n<br>
+返回值：幻方（df格式）</tt></dd></dl>
+ <dl><dt><a name="-get_mm"><strong>get_mm</strong></a>(xtime=None)</dt><dd><tt>功能说明：根据传入的时间&nbsp;，返回分钟部分（整型）<br>
+参数：xtime，可以是格式为&nbsp;hh:mm:ss&nbsp;的时间字符串，也可以是时间戳<br>
+返回值：整型&nbsp;mm</tt></dd></dl>
+ <dl><dt><a name="-get_month"><strong>get_month</strong></a>(xdate=None)</dt><dd><tt>功能说明：对传入的日期取月份以数值型返回，<br>
+参数：xdate，表示传入日期，取值可以是YYYY-mm-dd格式，或用&nbsp;python&nbsp;构造的日期型，<br>
+返回值：整型月份</tt></dd></dl>
+ <dl><dt><a name="-get_page_by_gevent"><strong>get_page_by_gevent</strong></a>(url_arr, xcount=None)</dt><dd><tt>功能说明：调用该函数返回由url_arr&nbsp;所指向的一堆url所对应的页面源码。<br>
+Parameters<br>
+----------<br>
+url_arr&nbsp;:&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;是&nbsp;url&nbsp;list，每个元素是一个&nbsp;url<br>
+xcount&nbsp;:&nbsp;int<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;取值正整数或&nbsp;None，表示url_arr&nbsp;中完成几个即结束；默认值None&nbsp;，表示需要完成所有&nbsp;url&nbsp;的请求<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+是一个&nbsp;list&nbsp;，每个元素是&nbsp;url_arr&nbsp;中相应&nbsp;url&nbsp;的&nbsp;page_source</tt></dd></dl>
+ <dl><dt><a name="-get_page_by_requests"><strong>get_page_by_requests</strong></a>(url, header=None)</dt><dd><tt>说明：下载（获取）指定&nbsp;URL&nbsp;的页面源码。对于静态&nbsp;html&nbsp;或网站能直接提供数据的（包括api形式，string&nbsp;形式，json形式等），<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请优先使用本接口去获取数据，次选上面的&nbsp;get_page_by_urllib()&nbsp;接口；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若网站的数据没有直接给，而是用&nbsp;js&nbsp;方式提供的话，则请调用下面的&nbsp;get_page_by_browser()&nbsp;方式去获取，它是模拟浏览器的<br>
+参数：url：目标地址;&nbsp;headers:&nbsp;请求头，若没有传入，则由本函数自己调用请求头。<br>
+返回值：url&nbsp;指向的&nbsp;page_source（本函数已经将取到的&nbsp;page_source&nbsp;&nbsp;decode()&nbsp;成字符串形式（纯文本））</tt></dd></dl>
+ <dl><dt><a name="-get_pid_arr"><strong>get_pid_arr</strong></a>(xname=None, accurate=False, include_name=True)</dt><dd><tt>功能说明：根据参数&nbsp;xname&nbsp;查找相应的进程号，如果xname&nbsp;为&nbsp;None，则返回所有进程号<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xname&nbsp;:&nbsp;TYPE:str,&nbsp;optional，欲查找的进程名称，如果是&nbsp;None，则返回所有进程id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;accurate:&nbsp;type:bool,&nbsp;default:&nbsp;False,&nbsp;表示精确查找还是模糊查找，可取以下值：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True:&nbsp;表示精确查找，此时，只有进程名和输入的&nbsp;xname&nbsp;完全相等才返回进程id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False:&nbsp;表示模糊查找，此时，进程名只要包含&nbsp;xname，则返回进程&nbsp;id<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include_name:&nbsp;表示返回的结果中是否需要包含进程名，可取以下值：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True:&nbsp;表示需要包含进程名（默认）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False:&nbsp;表示不需要包含进程名<br>
+Returns<br>
+-------<br>
+返回值：进程&nbsp;id&nbsp;组成的&nbsp;list</tt></dd></dl>
+ <dl><dt><a name="-get_pid_name_arr"><strong>get_pid_name_arr</strong></a>()</dt><dd><tt>功能说明：获取所有进程<br>
+Returns<br>
+-------<br>
+返回值：list，其元素是&nbsp;dict，每个&nbsp;dict&nbsp;包含两个&nbsp;key，分别是&nbsp;'name',&nbsp;'pid'，他们指向进程名和进程id</tt></dd></dl>
+ <dl><dt><a name="-get_prime_arr"><strong>get_prime_arr</strong></a>(n=100)</dt><dd><tt>功能说明：返回&nbsp;n&nbsp;以内的所有素数</tt></dd></dl>
+ <dl><dt><a name="-get_private_ip"><strong>get_private_ip</strong></a>()</dt><dd><tt>功能说明：获取本机内网ip地址，这是获取到真实的内网IP，应优先使用本函数。<br>
+参数：无<br>
+返回值：本机内网&nbsp;IP。</tt></dd></dl>
+ <dl><dt><a name="-get_project_info"><strong>get_project_info</strong></a>(project_dir, file_type_str='.py;.c;.cpp;.js;.go;.m;.pl;.lua;.rb;.rs;.scala;.java')</dt><dd><tt>功能说明：根据项目所在路径，统计项目所有源码文件累计有效代码行数，注释行数，空白行数等，<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_dir&nbsp;:&nbsp;TYPE:str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：这是一条项目路径，必填。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file_type:&nbsp;type:str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：表示哪些文件类型需进行统计行数，它是一个字符串，把所有需统计的文件扩展名以点开头添加进这个字符，相互用分号隔开即可<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include_blank_line:&nbsp;type:&nbsp;bool，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：表示是否统计空行，默认&nbsp;False，表示不统计空行<br>
+Returns<br>
+-------<br>
+返回值：df，包含有效代码行数，注释行数，空白行数等列</tt></dd></dl>
+ <dl><dt><a name="-get_project_lines"><strong>get_project_lines</strong></a>(project_dir, file_type_str='.py;.c;.cpp;.js;.go;.m;.pl;.lua;.rb;.rs;.scala;.java', include_blank_line=False)</dt><dd><tt>功能说明：根据项目所在路径，统计项目所有源码文件总行数<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_dir&nbsp;:&nbsp;TYPE:str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：这是一条项目路径，必填。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;file_type:&nbsp;type:str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：表示哪些文件类型需进行统计行数，它是一个字符串，把所有需统计的文件扩展名以点开头添加进这个字符，相互用分号隔开即可<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;include_blank_line:&nbsp;type:&nbsp;bool，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：表示是否统计空行，默认&nbsp;False，表示不统计空行<br>
+Returns<br>
+-------<br>
+返回值：总行数,&nbsp;int&nbsp;型</tt></dd></dl>
+ <dl><dt><a name="-get_public_ip"><strong>get_public_ip</strong></a>()</dt><dd><tt>功能说明：获取本机公网ip地址<br>
+参数：无<br>
+返回值：本机公网&nbsp;ip</tt></dd></dl>
+ <dl><dt><a name="-get_pyfile_imported_modules"><strong>get_pyfile_imported_modules</strong></a>(pyfile)</dt><dd><tt>功能说明：返回一个&nbsp;.py&nbsp;文件中所有被&nbsp;import&nbsp;到的模块及包组成的&nbsp;list<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pyfile&nbsp;:&nbsp;TYPE:&nbsp;str&nbsp;&nbsp;要求输入的一个&nbsp;.py&nbsp;文件（含全路径，否则只在当前目录找）<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：返回一个&nbsp;.py&nbsp;文件中所有被&nbsp;import&nbsp;到的模块及包组成的&nbsp;list</tt></dd></dl>
+ <dl><dt><a name="-get_pyproject_imported_modules"><strong>get_pyproject_imported_modules</strong></a>(project_dir, save_to_file=True, out_file='requirements.txt')</dt><dd><tt>功能说明：返回一个&nbsp;python&nbsp;项目中的所有&nbsp;import&nbsp;到的模块和包构成的&nbsp;list（不含版本号）,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果有指定&nbsp;out_file&nbsp;的话，则同时将输出保存到&nbsp;out_file&nbsp;所指的文件中，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;在输出文件中所有的包统一附加了版本号&nbsp;&gt;=0.0.1，使用者若引用输出文件的话，请考虑清楚统一版本号0.0.1&nbsp;是否适合你，不要盲目引用！！<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;project_dir&nbsp;:&nbsp;type:str&nbsp;项目路径。如果为&nbsp;None，则直接取当前目录路径<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;save_to_file:&nbsp;type:&nbsp;bool.&nbsp;表示是否保存到文件，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;取值&nbsp;True&nbsp;or&nbsp;False，True&nbsp;表示需要保存到文件，&nbsp;False&nbsp;表示不需要保存。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若该值为&nbsp;True，则下面的&nbsp;out_file&nbsp;起作用，否则忽略&nbsp;out_file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;out_file&nbsp;:&nbsp;TYPE:str,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用于保存结果的文件，一般就是&nbsp;'requirements.txt'&nbsp;这个文件名，最好不要更改。<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：项目中所有&nbsp;import&nbsp;的到模块或包构成的&nbsp;list（不含版本号）</tt></dd></dl>
+ <dl><dt><a name="-get_randint_arr"><strong>get_randint_arr</strong></a>(xbegin=1, xend=10)</dt><dd><tt>功能说明：调用该函数返回一个在xbegin（含）&nbsp;和&nbsp;xend（含）之间的随机整数&nbsp;list<br>
+参数：xbegin：起始整数；xend:&nbsp;结束整数<br>
+返回值：随机整数构成的一维&nbsp;list</tt></dd></dl>
+ <dl><dt><a name="-get_randint_df"><strong>get_randint_df</strong></a>(n=3)</dt><dd><tt>功能说明：调用该函数返回一个&nbsp;n&nbsp;x&nbsp;n&nbsp;的&nbsp;元素为不大于&nbsp;n&nbsp;的随机整数构成的&nbsp;df</tt></dd></dl>
+ <dl><dt><a name="-get_report_dir"><strong>get_report_dir</strong></a>()</dt><dd><tt>说明：该函数用来获取&nbsp;report/路径，如果没有则创建之。并且以&nbsp;'/'&nbsp;结尾<br>
+返回值：report/&nbsp;目录在用户目录下完整路径</tt></dd></dl>
+ <dl><dt><a name="-get_rsa_key"><strong>get_rsa_key</strong></a>(bit=1024)</dt><dd><tt>功能说明：本接口用来产生一对rsa&nbsp;public&nbsp;key&nbsp;和&nbsp;rsa&nbsp;private&nbsp;key<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bit:&nbsp;int型，可选，默认值&nbsp;1024<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：本参数表明密钥长度<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+返回值：list，共有3个元素，第1个元素是&nbsp;public&nbsp;key,字节流类型,&nbsp;第2个元素是&nbsp;private&nbsp;key，字节流类型；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第3个元素表示能加密的明文长度，int型。</tt></dd></dl>
+ <dl><dt><a name="-get_site_modules"><strong>get_site_modules</strong></a>(with_version=False)</dt><dd><tt>功能说明：返回所有第3方安装的模块和包<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：所有已安装的第&nbsp;3方模块和包组成的&nbsp;list</tt></dd></dl>
+ <dl><dt><a name="-get_ss"><strong>get_ss</strong></a>(xtime=None)</dt><dd><tt>功能说明：根据传入的时间&nbsp;，返回秒数部分（整型）<br>
+参数：xtime，可以是格式为&nbsp;hh:mm:ss&nbsp;的时间字符串，也可以是时间戳<br>
+返回值：整型&nbsp;ss</tt></dd></dl>
+ <dl><dt><a name="-get_system_encoding"><strong>get_system_encoding</strong></a>()</dt><dd><tt>功能说明：获取操作系统的编码字符集</tt></dd></dl>
+ <dl><dt><a name="-get_time"><strong>get_time</strong></a>(xtime=None, time_format='%H:%M:%S')</dt><dd><tt>功能说明：根据传入的时间戳，取出时间返回<br>
+参数：xtime:&nbsp;是时间戳，如time.time()&nbsp;返回的结果<br>
+返回值：返回该时间戳指向的时间部分，以&nbsp;HH:MM:SS&nbsp;字符串格式返回。</tt></dd></dl>
+ <dl><dt><a name="-get_today"><strong>get_today</strong></a>()</dt><dd><tt>功能说明：获取今天日期（python格式）<br>
+参数：无<br>
+返回值：今天日期（python&nbsp;格式)</tt></dd></dl>
+ <dl><dt><a name="-get_tomorrow"><strong>get_tomorrow</strong></a>()</dt><dd><tt>功能说明：获取明天日期（python格式）<br>
+参数：无<br>
+返回值：明天日期（python格式）</tt></dd></dl>
+ <dl><dt><a name="-get_uuid"><strong>get_uuid</strong></a>()</dt><dd><tt>功能说明：该函数用于获取一个&nbsp;uuid()，其作用是产生一个唯一数，一般用在某种场&nbsp;合做&nbsp;ID，并且以时间开头，方便需要时判断<br>
+参数：无<br>
+返回值：生成的十进制&nbsp;uuid</tt></dd></dl>
+ <dl><dt><a name="-get_verify_code"><strong>get_verify_code</strong></a>(code_image)</dt><dd><tt>功能说明：处理验证码，传入的参数&nbsp;code_image&nbsp;为待处理的验证码图片（不是图片文件，而是图片数据）<br>
+参数：code_image:&nbsp;待处理的验证码图片（不是图片文件，而是图片数据）<br>
+返回值：文本验证码</tt></dd></dl>
+ <dl><dt><a name="-get_year"><strong>get_year</strong></a>(xdate=None)</dt><dd><tt>功能说明：对传入的日期取年份以数值型返回，<br>
+参数：xdate，表示传入日期，取值可以是YYYY-mm-dd格式，或用&nbsp;python&nbsp;构造的日期型，<br>
+返回值：年份（数值型）</tt></dd></dl>
+ <dl><dt><a name="-get_yesterday"><strong>get_yesterday</strong></a>()</dt><dd><tt>功能说明：获取昨天日期（python格式）<br>
+参数：无<br>
+返回值：昨天日期（python&nbsp;格式）</tt></dd></dl>
+ <dl><dt><a name="-hms_to_minutes"><strong>hms_to_minutes</strong></a>(xtime)</dt><dd><tt>功能说明：将传入的&nbsp;xtime&nbsp;转为分钟数返回<br>
+参数：xtime，取值可以为&nbsp;hh:mm:ss&nbsp;或时间戳<br>
+返回值：分钟数</tt></dd></dl>
+ <dl><dt><a name="-hms_to_seconds"><strong>hms_to_seconds</strong></a>(xtime)</dt><dd><tt>功能说明：将传入的&nbsp;xtime&nbsp;转为秒数返回<br>
+参数：xtime，取值可以为&nbsp;hh:mm:ss&nbsp;或时间戳<br>
+返回值：秒数</tt></dd></dl>
+ <dl><dt><a name="-hms_to_timestamp"><strong>hms_to_timestamp</strong></a>(xtime, xdate=None)</dt><dd><tt>功能说明：将输入的日期时间转成时间戳戳（timestamp），<br>
+参数：xdate&nbsp;可以是字符串形式，也可以是python&nbsp;date&nbsp;格式，如果没有输入，则取今天<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xtime&nbsp;是时间，需要&nbsp;hh:mm:ss&nbsp;形式<br>
+返回值：&nbsp;转换后的时间戳</tt></dd></dl>
+ <dl><dt><a name="-int_to_list"><strong>int_to_list</strong></a>(intnum)</dt><dd><tt>功能说明：对输入的一个整型数&nbsp;intnum&nbsp;以&nbsp;list形式返回，list&nbsp;中的每个元素都是整型，他们是原整型数的各个数位</tt></dd></dl>
+ <dl><dt><a name="-is_linux"><strong>is_linux</strong></a>()</dt><dd><tt>功能说明：判断操作系统是否&nbsp;linux，是的话返回&nbsp;True,&nbsp;否则返回&nbsp;False</tt></dd></dl>
+ <dl><dt><a name="-is_number"><strong>is_number</strong></a>(n)</dt><dd><tt>功能说明：测试输入的参数是否为数值型（或数值型字符串），如是则返回&nbsp;True，否则返回&nbsp;False<br>
+参数：n:&nbsp;待检测的数据<br>
+返回值：如是数字则返回&nbsp;True，否则返回&nbsp;False</tt></dd></dl>
+ <dl><dt><a name="-is_valid_date"><strong>is_valid_date</strong></a>(xdate)</dt><dd><tt>功能说明：判断是否日期<br>
+参数：xdate:&nbsp;表示传入的日期<br>
+返回值：True:&nbsp;表示传入的的确是日期；False:&nbsp;表示传入的不是日期</tt></dd></dl>
+ <dl><dt><a name="-is_weekday"><strong>is_weekday</strong></a>(xdate=None)</dt><dd><tt>功能说明：该函数用于判断传入的日期（若没传入，则判断今天）是否为周一到周五<br>
+参数：xdate:&nbsp;日期，取值可以是'-'&nbsp;分割的字符串日期，也可以是&nbsp;python&nbsp;格式的日期<br>
+返回值：如果是周一到周五，则返回True，否则返回&nbsp;False</tt></dd></dl>
+ <dl><dt><a name="-is_weekend"><strong>is_weekend</strong></a>(xdate=None)</dt><dd><tt>功能说明：该函数用于判断传入的日期（若没传入，则判断今天）是否为双休日<br>
+参数：xdate:&nbsp;日期，取值可以是'-'&nbsp;分割的字符串日期，也可以是&nbsp;python&nbsp;格式的日期<br>
+返回值：若是双休日，则返回True，否则返回&nbsp;False</tt></dd></dl>
+ <dl><dt><a name="-is_windows"><strong>is_windows</strong></a>()</dt><dd><tt>功能说明：判断操作系统是否&nbsp;windows，是的话返回&nbsp;True,&nbsp;否则返回&nbsp;False</tt></dd></dl>
+ <dl><dt><a name="-list_to_tuple"><strong>list_to_tuple</strong></a>(arr, quote_flag=False)</dt><dd><tt>功能说明：该函数用于将&nbsp;list&nbsp;转成&nbsp;tuple，包括只有一个元素的情形&nbsp;(注意：本函数将&nbsp;list&nbsp;转成&nbsp;tuple&nbsp;主要是给数据库&nbsp;sql&nbsp;用的，用在其他地方不一定合适)<br>
+参数：arr,&nbsp;待转换的数组，quote_flag&nbsp;表示是否给转换后的每个元组元素加上单引号，如果是&nbsp;True&nbsp;的话就加，加上去主要为了给数据库查询语句&nbsp;select&nbsp;用<br>
+返回值：xtuple,&nbsp;字符串形式的元组</tt></dd></dl>
+ <dl><dt><a name="-make_api"><strong>make_api</strong></a>(dir_or_file, force=False, stop_func='z')</dt><dd><tt>功能说明：本接口对指定的&nbsp;python&nbsp;项目或源码文件，生成&nbsp;API&nbsp;列表（不是说明文档），<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;即相当于给&nbsp;py&nbsp;库文件的开头加上&nbsp;__all__&nbsp;,&nbsp;并搜索所有接口定义（函数定义），将有定义的接口名放到&nbsp;__all__&nbsp;这个&nbsp;list&nbsp;中，<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dir_or_file:&nbsp;表示可以接受文件名或目录名<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;force:&nbsp;type:bool,&nbsp;表示是否重新生成&nbsp;api&nbsp;list，无论是否已有&nbsp;api&nbsp;list，可取以下值：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True:&nbsp;表示要重新生成&nbsp;api&nbsp;list，即若有旧的&nbsp;api&nbsp;list，则先删除它，然后生成新的&nbsp;api&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False:&nbsp;表示如果已经有&nbsp;api&nbsp;list，则直接返回。&nbsp;（默认）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stop_func&nbsp;:&nbsp;TYPE,&nbsp;optional<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;是函数名，表示如果遇到了&nbsp;stop_func，就停止搜索.&nbsp;缺省函数名为&nbsp;'z'.<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：无</tt></dd></dl>
+ <dl><dt><a name="-make_header"><strong>make_header</strong></a>()</dt><dd><tt>说明：构造一个&nbsp;http&nbsp;请求头返回</tt></dd></dl>
+ <dl><dt><a name="-merge_list"><strong>merge_list</strong></a>(arr, drop_duplicates=False)</dt><dd><tt>功能说明：合并&nbsp;arr&nbsp;中的元素（也是list）后返回<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr:&nbsp;type:list，这是一个二维&nbsp;list，其元素也是&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drop_duplicates:&nbsp;type:bool<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：该参数表示是合并&nbsp;list&nbsp;后是否去重，默认&nbsp;False，表示不去重，即纯粹的合并，不做去重。<br>
+Returns<br>
+-------<br>
+返回值：合并后的&nbsp;list</tt></dd></dl>
+ <dl><dt><a name="-num_to_words"><strong>num_to_words</strong></a>(num)</dt><dd><tt>功能说明：转换数字为大写（财务）货币格式(&nbsp;format_word.__len__()&nbsp;-&nbsp;3&nbsp;+&nbsp;2位小数&nbsp;)<br>
+参数：num:&nbsp;待转换的数字，支持&nbsp;float,&nbsp;int,&nbsp;long,&nbsp;string&nbsp;格式<br>
+返回值：财务上的大写金额</tt></dd></dl>
+ <dl><dt><a name="-recognize_verify_code"><strong>recognize_verify_code</strong></a>(image_path)</dt><dd><tt>功能说明：识别验证码，其中具体调用下面的&nbsp;recognize_code_by_tesseract()&nbsp;来识别<br>
+参数：image_path:&nbsp;图片路径<br>
+返回值：文本形式的验证码</tt></dd></dl>
+ <dl><dt><a name="-release_redis_lock"><strong>release_redis_lock</strong></a>(lock_name, lock_id, redis_conn)</dt><dd><tt>功能说明：本接口用于释放&nbsp;redis&nbsp;锁<br>
+Parameters<br>
+----------<br>
+lock_name&nbsp;:&nbsp;TYPE:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：这是&nbsp;redis&nbsp;锁（本质是&nbsp;key&nbsp;名）<br>
+lock_id&nbsp;:&nbsp;TYPE:&nbsp;str<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：这是&nbsp;redis&nbsp;锁的值，本质是&nbsp;key&nbsp;所指向的&nbsp;value<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：释放成功返回&nbsp;True，否则返回&nbsp;False</tt></dd></dl>
+ <dl><dt><a name="-remove_df"><strong>remove_df</strong></a>(df, to_be_remove_df)</dt><dd><tt>功能说明：不直接修改传入的&nbsp;df!!&nbsp;对传入的&nbsp;df&nbsp;去除&nbsp;to_be_remove_df&nbsp;中的数据后返回<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df&nbsp;:&nbsp;TYPE:&nbsp;pandas&nbsp;dataframe<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：股票信息数据（腾讯实时tick数据为宜，也可接受网易K线数据）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to_be_remove_df:&nbsp;type:&nbsp;pandas&nbsp;dataframe<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：也是df格式的股票数据，这是从&nbsp;df&nbsp;中待删除的数据<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+返回值：df&nbsp;去除&nbsp;to_be_remove_df&nbsp;中的数据后返回（df格式）</tt></dd></dl>
+ <dl><dt><a name="-retry_command"><strong>retry_command</strong></a>(command, para='', wait_time=None, retry_count=10, auto_wait=True)</dt><dd><tt>功能说明：对传入的命令command，尝试执行&nbsp;retry_count&nbsp;次,&nbsp;只要执行到成功，立马返回<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;command:&nbsp;传入的命令（对象）；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;para:&nbsp;字符串形式的参数链，必须完整；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wait_time:&nbsp;表示两次尝试之间的等待时间；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;retry_count:&nbsp;尝试执行次数;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;auto_wait:&nbsp;表示在每次尝试失败后是否愿意等待一段时间尝试下一次，True&nbsp;表示愿意，False&nbsp;表示不等待。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果&nbsp;wait_time&nbsp;不为&nbsp;None&nbsp;，则直接用&nbsp;wait_time&nbsp;而不考虑&nbsp;auto_wait，&nbsp;否则考虑&nbsp;auto_wait,&nbsp;如果这时&nbsp;auto_wait为&nbsp;True，则由系统自己决定等待时间，如果为&nbsp;False，则采用&nbsp;0&nbsp;等待<br>
+返回值：返回一个&nbsp;list，包含两个元素[command,&nbsp;result],&nbsp;第一个元素是传进来的&nbsp;command&nbsp;对象本身，第2个元素是执行结果。（因为有些执行是直接改变自身的，所以需要把自身改变后的&nbsp;command&nbsp;返回给主调函数）</tt></dd></dl>
+ <dl><dt><a name="-run_process"><strong>run_process</strong></a>(func, name='process1', daemon=False, start=True, block=False, **kwargs)</dt><dd><tt>功能说明：本接口用于运行进程<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;func&nbsp;:&nbsp;函数名或方法名<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：这是待运行的进程（即函数名或方法名）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name:&nbsp;表示要启动的进程名称，这里随机取一个预设值，这个名称最好由外部传入以表达正确含义<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;daemon:&nbsp;表示子进程是否依赖主进程，如果是，则设置&nbsp;daemon&nbsp;为&nbsp;True，表示子进程必须随主进程退出而退出，避免子进程被启动后而主进程已退出导致子进程成为僵尸进程。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start:&nbsp;type:&nbsp;bool,&nbsp;表示是否在本接口内启动进程，默认&nbsp;True，表示要启动；若为&nbsp;False，则将进程返回给主调函数处理<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block:&nbsp;type:bool,&nbsp;表示是否以阻塞方式运行&nbsp;func，默认&nbsp;False，表示非阻塞。&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**kwargs&nbsp;:&nbsp;TYPE:&nbsp;dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：这是上述进程&nbsp;func（函数或方法）要用到的参数，字典形式传入<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+None.</tt></dd></dl>
+ <dl><dt><a name="-run_thread"><strong>run_thread</strong></a>(func, start=True, block=False, **kwargs)</dt><dd><tt>功能说明：本接口用于运行线程<br>
+&nbsp;<br>
+Parameters<br>
+----------<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;func&nbsp;:&nbsp;函数名或方法名<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：这是待运行的线程（即函数名或方法名）<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;start:&nbsp;type:&nbsp;bool,&nbsp;表示是否在本接口内启动线程，默认&nbsp;True，表示要启动；若为&nbsp;False，则将线程返回给主调函数处理<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block:&nbsp;type:bool,&nbsp;表示是否以阻塞方式运行&nbsp;func，默认&nbsp;False，表示非阻塞。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**kwargs&nbsp;:&nbsp;TYPE:&nbsp;dict<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;说明：这是上述线程&nbsp;func（函数或方法）要用到的参数，字典形式传入<br>
+&nbsp;<br>
+Returns<br>
+-------<br>
+None.</tt></dd></dl>
+ <dl><dt><a name="-seconds_to_hms"><strong>seconds_to_hms</strong></a>(seconds)</dt><dd><tt>功能说明：将秒数转为&nbsp;hms&nbsp;形式<br>
+参数：seconds，秒数<br>
+返回值：hms,&nbsp;表示&nbsp;HH:MM:SS&nbsp;格式的时间</tt></dd></dl>
+ <dl><dt><a name="-security_check"><strong>security_check</strong></a>(ip)</dt><dd><tt>功能说明：本函数获取本机&nbsp;公网&nbsp;ip&nbsp;，和传入的&nbsp;ip&nbsp;比较，以判断程序是否运行在传入的&nbsp;ip&nbsp;电脑上，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若不是，则返回&nbsp;False&nbsp;给上层代码，以决定是否退出，这样可防止程序被非法运行在指定&nbsp;IP&nbsp;以外的电脑上。<br>
+参数：ip:&nbsp;本程序能正确运行的电脑的&nbsp;ip<br>
+返回值：True&nbsp;or&nbsp;False,</tt></dd></dl>
+ <dl><dt><a name="-send_mail"><strong>send_mail</strong></a>(msg_dict, receiver_arr, smtp_server, smtp_port, sender_email, sender_password, mode='inline')</dt><dd><tt>功能说明：自定义发邮件函数，<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msg_dict:&nbsp;为邮件标题和内容构成的字典，只需包含content&nbsp;和&nbsp;subject&nbsp;两项即可，有其他项数据也是可以的;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果要发送图片，则要在&nbsp;msg_dict&nbsp;中定义&nbsp;image_arr，即要定义&nbsp;msg_dict['image_arr'],&nbsp;而&nbsp;image_arr&nbsp;中的元素都是一条条指向图片的路径。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;receiver_arr:&nbsp;邮件接收者email&nbsp;构成的数组,如果是单个接收者也可以是字符串形式的&nbsp;email地址&nbsp;；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;smtp_server:&nbsp;smtp&nbsp;服务器IP或域名；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;smtp_port:&nbsp;smtp&nbsp;服务器端口；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sender_email:&nbsp;邮件发送者的email&nbsp;地址；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sender_passwprd:&nbsp;发送者的密码；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mode:&nbsp;取值为&nbsp;inline&nbsp;或&nbsp;attachment，表示对图片是内嵌方式发还是附件形式发；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注意，参数&nbsp;receiver_arr&nbsp;为数组形式，每个元素是字符串，内容是email&nbsp;地址，如果有多个收件人，则在数组中以逗号分割;&nbsp;sender:&nbsp;发件人的邮箱地址，字符串格式。<br>
+返回值：无</tt></dd></dl>
+ <dl><dt><a name="-sort_df_column"><strong>sort_df_column</strong></a>(df, column_arr, inplace=False)</dt><dd><tt>功能说明：对传入的&nbsp;df&nbsp;，将其各列按照&nbsp;column_arr&nbsp;中的列顺序排列后形成新的&nbsp;df&nbsp;返回。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.&nbsp;若&nbsp;df&nbsp;中的列名与&nbsp;column_arr&nbsp;没有交集，则返回原&nbsp;df;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.&nbsp;若&nbsp;df&nbsp;中的列名与&nbsp;column_arr&nbsp;只有部分交集，则只对&nbsp;df&nbsp;中的交集字段按&nbsp;column_arr&nbsp;排序，然后放在新&nbsp;df&nbsp;的前面，<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df中有而column_arr&nbsp;中没有的字段统统按原来顺序排在新生成的&nbsp;df&nbsp;后面；<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3.&nbsp;若&nbsp;df&nbsp;中的列名是&nbsp;column_arr&nbsp;子集，则将&nbsp;df&nbsp;中的所有列完全按照&nbsp;column_arr&nbsp;中的顺序排列。<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;df:待（按列）排序的&nbsp;df;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;column_arr:&nbsp;被参照排序的字段&nbsp;list<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inplace:&nbsp;表示是否直接修改原&nbsp;df，默认&nbsp;False，表示先&nbsp;copy&nbsp;一个&nbsp;df，然后对&nbsp;copy&nbsp;的&nbsp;df&nbsp;进行修改，inplace&nbsp;可取以下值：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True:&nbsp;表示直接修改传入的&nbsp;df<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False:&nbsp;表示生成一个新的&nbsp;df&nbsp;进行修改，保持原&nbsp;df&nbsp;不变。<br>
+返回值：列排序后的&nbsp;df</tt></dd></dl>
+ <dl><dt><a name="-strdate_to_pydate"><strong>strdate_to_pydate</strong></a>(xdate)</dt><dd><tt>功能说明：将字符串形的日期，转化成python&nbsp;datetime.date()&nbsp;表示的日期<br>
+参数：xdate:&nbsp;待转换的字符串形式的日期<br>
+返回值：py&nbsp;形式的日期</tt></dd></dl>
+ <dl><dt><a name="-time_spend"><strong>time_spend</strong></a>(t1)</dt><dd><tt>功能说明：该函数计算t1&nbsp;到&nbsp;t2&nbsp;之间的时间差，并输出信息，一般在程序末尾调用，输出程序执行花了多少时间<br>
+参数：t1：&nbsp;表示起始时间，需时间戳形式，即秒数<br>
+返回值：无</tt></dd></dl>
+ <dl><dt><a name="-timestamp_to_hms"><strong>timestamp_to_hms</strong></a>(xtime)</dt><dd><tt>功能说明：将时间戳转成&nbsp;HH:MM:SS格式，丢掉日期部分<br>
+参数：xtime:&nbsp;时间戳格式<br>
+返回值：HH:MM:SS格式的时间</tt></dd></dl>
+ <dl><dt><a name="-to_path"><strong>to_path</strong></a>(xpath=None, style='UNIX', end_slash=True)</dt><dd><tt>功能说明：转换路径风格<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xpath:&nbsp;为待转换的路径；&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style：&nbsp;为目标风格，接受值：'dos','windows','linux','unix',&nbsp;以及他们的大写，含意与小写相同。默认&nbsp;unix（linux）风格<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;endwith:&nbsp;表示转换路径后是否确保路径末尾必须有指定符号，默认&nbsp;True，表示路径末尾必须有斜杠或反斜杠<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None:&nbsp;表示不添加任何符号，保持原样<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True:&nbsp;表示确保路径末尾以'/'或'\'结尾<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False:&nbsp;表示确保路径末尾没有'/'或'\'结尾<br>
+返回值：转换风格后的路径</tt></dd></dl>
+ <dl><dt><a name="-to_pydate"><strong>to_pydate</strong></a>(xdate)</dt><dd><tt>功能说明：将字符串形的日期，转化成python&nbsp;datetime.date()&nbsp;表示的日期<br>
+参数：<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xdate:&nbsp;待转换的日期，可以是字符串型，py&nbsp;datetime.date()&nbsp;型，或&nbsp;df&nbsp;中含有&nbsp;date&nbsp;的列<br>
+返回值：py&nbsp;形式的日期。如果传入的是&nbsp;df&nbsp;，则将&nbsp;df&nbsp;中&nbsp;date列&nbsp;转换成&nbsp;py&nbsp;datetime.date()&nbsp;然后返回&nbsp;df，若没有&nbsp;date&nbsp;列，则将原&nbsp;df&nbsp;返回<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;无论&nbsp;df&nbsp;中有没&nbsp;'date'&nbsp;列，返回的&nbsp;df&nbsp;的&nbsp;index&nbsp;和传入时保持一致。</tt></dd></dl>
+ <dl><dt><a name="-xround"><strong>xround</strong></a>(f, bit=2)</dt><dd><tt>功能说明：由于&nbsp;python3&nbsp;的&nbsp;&nbsp;round()&nbsp;函数返回的结果与我们中国人的常规认识不同，所以自定义一个&nbsp;<a href="#-xround">xround</a>()&nbsp;函数&nbsp;来代替系统提供的&nbsp;round()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注意：本函数是通过加一个较小的数（0.0000001）&nbsp;来达到符合中国习惯的四舍五入目的的，精度为小数点后6位。<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请注意本法是否符合用户的四舍五入要求，若不符合，请不要调用！<br>
+参数：f:&nbsp;要进行四舍五入的目标数值,&nbsp;也可以是dataframe&nbsp;的数值列；bit:&nbsp;表示保留几位小数<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注意：若是df传给f,&nbsp;则&nbsp;df&nbsp;最好是独立的，否则就是对其它df&nbsp;的引用，若传其他&nbsp;df&nbsp;的引用进来，则会产生slice&nbsp;警告<br>
+&nbsp;<br>
+返回值：四舍五入后的数值</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>__all__</strong> = ['get_api_list', 'acquire_redis_lock', 'release_redis_lock', 'append_arr_to_df', 'change_path_style', 'concat', 'convert_df_type', 'delete_api_list', 'df_to_list', 'df_to_tuple', 'df_to_table', 'df_to_webpage', 'encrypt', 'decrypt', 'file_log', 'find', 'ftp_open', 'ftp_close', 'ftp_up', 'ftp_down', ...]</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#7799ee">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Author</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#7799ee"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%">xjxfly</td></tr></table>
+</body></html>
