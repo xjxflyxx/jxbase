@@ -1,7 +1,9 @@
+
 作者：Jason Xie
 邮箱：xjxfly@qq.com
 QQ交流群：1001030977
 
+jxbase 的目标是努力实现各种通用转换功能。
 
 下载 jxbase ，然后用 python setup.py install 进行安装，安装完成后，使用举例如下：
 
