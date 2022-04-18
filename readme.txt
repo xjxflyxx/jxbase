@@ -7,7 +7,7 @@ QQ交流群：1001030977
 
 import jxbase as jxb
 
-df = jxb.get_magic_square(6)
+df = jxb.get_magic_square(6)     # 获取6阶幻方
 print(df)
 输出：
     c1  c2  c3  c4  c5  c6
